@@ -19,7 +19,7 @@ public class Player{
 		this.xPos = xPos;
 	}
 	public void display(float delta){
-		HvlPainter2D.hvlDrawQuad(xPos, Display.getHeight() - 75, sizeX, sizeY, colorPlay);
+		HvlPainter2D.hvlDrawQuad(xPos, Display.getHeight() - 75, sizeX, sizeY, Main.getTexture(4), colorPlay);
 	}
 
 }

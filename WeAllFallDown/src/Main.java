@@ -93,6 +93,8 @@ public class Main extends HvlTemplateInteg2D {
 		getTextureLoader().loadResource("osFont");//0
 		getTextureLoader().loadResource("Font");//1
 		getTextureLoader().loadResource("runningman");//2
+		getTextureLoader().loadResource("fallingEnemy"); //3
+		getTextureLoader().loadResource("New Piskel"); //4 
 		gameFont =  new HvlFontPainter2D(getTexture(0), HvlFontPainter2D.Preset.FP_INOFFICIAL,.5f,8f,0);
 		splashFont = new HvlFontPainter2D(getTexture(1), HvlFontUtil.DEFAULT,192, 256,0.25f,10);
 		
@@ -191,6 +193,8 @@ public class Main extends HvlTemplateInteg2D {
 					HvlMenu.setCurrent(death);
 				}
 				HvlPainter2D.hvlDrawQuad(100, 100, player.health * 3, 25, healthBar);
+				HvlPainter2D.hvlDrawQuad(98, 85, 2, 45, healthBar);
+				HvlPainter2D.hvlDrawQuad(400, 85, 2, 45, healthBar);
 				gameFont.drawWordc("0", 100, 150, healthBar, 0.3f);
 				gameFont.drawWordc("100", 400, 150, healthBar, 0.3f);
 				gameFont.drawWordc("Invincibility Time: "+ Math.round(graceCount), 250 , 180, healthBar, .3f);
@@ -216,7 +220,7 @@ public class Main extends HvlTemplateInteg2D {
 				gameFont.drawWordc("You have died", width/2, height/2 - 400, Color.white, 2f);
 				gameFont.drawWordc("Score: "+Math.round(score), width/2, height/2, Color.darkGray , 1.535f);
 				gameFont.drawWordc("Score: "+Math.round(score), width/2, height/2, Color.white, 1.5f);
-				gameFont.drawWordc("Press M to return to the menu", width/2, height/2 +400, Color.darkGray, 1.02f);
+				gameFont.drawWordc("Press M to return to the menu", width/2, height/2 +400, Color.darkGray, 1.005f);
 				gameFont.drawWordc("Press M to return to the menu", width/2, height/2 + 400, Color.white, 1f);
 				
 				if(Keyboard.isKeyDown(Keyboard.KEY_M)){
