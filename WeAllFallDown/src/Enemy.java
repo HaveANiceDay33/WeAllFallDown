@@ -14,6 +14,8 @@ public class Enemy {
 	public float speed;
 	HvlFontPainter2D gameFont;
 	
+	//add a declaration to put in a newly added enemy graphic
+	
 	public Enemy(float x, float y, float speed) {
 		this.x = x;
 		this.y = y;
@@ -22,12 +24,12 @@ public class Enemy {
 	public void display(float delta){
 		float colorArg = HvlMath.map(speed, 20, 100, .05f , 1.0f);
 		this.y += this.speed * delta;
-		HvlPainter2D.hvlDrawQuad(x, y, speed, speed, new Color(colorArg,colorArg,colorArg));
+		HvlPainter2D.hvlDrawQuad(x, y, speed, speed, new Color(colorArg,colorArg,colorArg));// put it before color argument
 		
 	}
 	public void displayMenu(float delta){
 		float colorArg = HvlMath.map(speed, 20, 100, .05f , 1.0f);
 		this.y += this.speed * delta;
-		HvlPainter2D.hvlDrawQuadc(x, y, speed, speed, new Color(colorArg,colorArg,colorArg));
+		HvlPainter2D.hvlDrawQuadc(x, y, speed, speed, new Color(colorArg,colorArg,colorArg));// put it before color argument
 	}
 }
