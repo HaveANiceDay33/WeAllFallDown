@@ -39,6 +39,8 @@ public class Main extends HvlTemplateInteg2D {
 	float score;
 	boolean hasPlayed;
 	
+	float intensifier;
+	
 	float graceCount;
 	
 	float waitTimeMenu;
@@ -81,6 +83,8 @@ public class Main extends HvlTemplateInteg2D {
 		splashColor = new Color(100 + (int)(Math.random() * ((255 - 100) + 1)) ,100 + (int)(Math.random() * ((255 - 100) + 1)),100 + (int)(Math.random() * ((255 - 100) + 1)));
 		shade = new Color(0,0,0,.75f);
 		splashTime = 3;
+		
+		intensifier = 1;
 		
 		score = 0;
 		
@@ -146,7 +150,7 @@ public class Main extends HvlTemplateInteg2D {
 					enemies.add(enemy);
 					counter = 0;
 				}
-				waitTimeGame -= .0005 * delta;
+				waitTimeGame -= .005 * delta;
 				for(Enemy wave : enemies){
 					wave.display(delta);
 					player.display(delta);
@@ -198,8 +202,9 @@ public class Main extends HvlTemplateInteg2D {
 			@Override
 			public void draw(float delta){
 				counter+=delta;
+				intensifier += .005 * delta;
 				if(counter > waitTimeMenu){
-					Enemy enemyMenu = new Enemy(HvlMath.randomFloatBetween(20, 1900),yPos -30, HvlMath.randomFloatBetween(20, 100));
+					Enemy enemyMenu = new Enemy(HvlMath.randomFloatBetween(20, 1900),yPos -30, HvlMath.randomFloatBetween(20, 100)*intensifier);
 					enemiesMenu.add(enemyMenu);
 					counter = 0;
 				}
