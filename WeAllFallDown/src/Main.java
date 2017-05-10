@@ -36,6 +36,7 @@ public class Main extends HvlTemplateInteg2D {
 	
 	float width;
 	float height;
+	float score;
 	boolean hasPlayed;
 	
 	float graceCount;
@@ -80,6 +81,8 @@ public class Main extends HvlTemplateInteg2D {
 		splashColor = new Color(100 + (int)(Math.random() * ((255 - 100) + 1)) ,100 + (int)(Math.random() * ((255 - 100) + 1)),100 + (int)(Math.random() * ((255 - 100) + 1)));
 		shade = new Color(0,0,0,.75f);
 		splashTime = 3;
+		
+		score = 0;
 		
 		healthBar = new Color(255,255,255,0.5f);
 		
@@ -137,6 +140,7 @@ public class Main extends HvlTemplateInteg2D {
 			@Override
 			public void draw(float delta){
 				counter+=delta;
+				score += delta; 
 				if(counter > waitTimeGame){
 					Enemy enemy = new Enemy(HvlMath.randomFloatBetween(20, 1900),yPos - 50, HvlMath.randomFloatBetween(20, 100));
 					enemies.add(enemy);
@@ -185,7 +189,8 @@ public class Main extends HvlTemplateInteg2D {
 				HvlPainter2D.hvlDrawQuad(100, 100, player.health * 3, 25, healthBar);
 				gameFont.drawWordc("0", 100, 150, healthBar, 0.3f);
 				gameFont.drawWordc("100", 400, 150, healthBar, 0.3f);
-				gameFont.drawWordc("Invincibility Time: "+ graceCount, 250 , 180, healthBar, .3f);
+				gameFont.drawWordc("Invincibility Time: "+ Math.round(graceCount), 250 , 180, healthBar, .3f);
+				gameFont.drawWordc("Score: "+Math.round(score), 300, 150, healthBar, 0.5f);
 				super.draw(delta);
 			}
 		};
@@ -198,8 +203,11 @@ public class Main extends HvlTemplateInteg2D {
 					enemiesMenu.add(enemyMenu);
 					counter = 0;
 				}
+				HvlPainter2D.hvlDrawQuad(0,0,width,height+ 400,shade);
 				gameFont.drawWordc("You have died", width/2, height/2 - 400, Color.darkGray, 2.05f);
 				gameFont.drawWordc("You have died", width/2, height/2 - 400, Color.white, 2f);
+				gameFont.drawWordc("Score: "+score, width/2, height/2, Color.darkGray , 1.535f);
+				gameFont.drawWordc("Score: "+Math.round(score), width/2, height/2, Color.white, 1.5f);
 				gameFont.drawWordc("Press Space to return to the menu", width/2, height/2 +400, Color.darkGray, 1.02f);
 				gameFont.drawWordc("Press Space to return to the menu", width/2, height/2 + 400, Color.white, 1f);
 				for(Enemy wave : enemiesMenu){
