@@ -60,7 +60,9 @@ public class Main extends HvlTemplateInteg2D {
 	float waitTime;
 	ArrayList<Enemy> enemies;
 	ArrayList<Enemy> enemiesMenu;
+	ArrayList<Stars> stars;
 	float counter;
+	float counterStars;
 	
 	HvlFontPainter2D gameFont;
 	
@@ -74,8 +76,10 @@ public class Main extends HvlTemplateInteg2D {
 		waitTimeGame = 1f;
 		graceCount = 30f;
 		counter = 0;
+		counterStars = 0;
 		enemies = new ArrayList<Enemy>();
 		enemiesMenu = new ArrayList<Enemy>();
+		stars = new ArrayList<Stars>();
 		yPos = -50;
 		width = Display.getWidth();
 		height = Display.getHeight();
@@ -122,14 +126,21 @@ public class Main extends HvlTemplateInteg2D {
 			@Override
 			public void draw(float delta){
 				counter+=delta;
+				counterStars += delta;
 				if(counter > waitTimeMenu){
 					Enemy enemyMenu = new Enemy(HvlMath.randomFloatBetween(20, 1900),yPos -30, HvlMath.randomFloatBetween(20, 100));
 					enemiesMenu.add(enemyMenu);
 					counter = 0;
 				}
-				
+				if(counterStars > waitTimeMenu + 1){
+					Stars allStars = new Stars(HvlMath.randomFloatBetween(0, 1900),yPos -30, HvlMath.randomFloatBetween(1, 5));
+					stars.add(allStars);
+				}
 				for(Enemy wave : enemiesMenu){
 					wave.displayMenu(delta);
+				}
+				for(Stars starWave : stars){
+					starWave.display(delta);
 				}
 				HvlPainter2D.hvlDrawQuad(0,0,width,height+ 400,shade);
 				gameFont.drawWordc("We All Fall Down", width/2, height/2 - 400, Color.darkGray, 2.05f);
@@ -147,10 +158,15 @@ public class Main extends HvlTemplateInteg2D {
 			public void draw(float delta){
 				counter+=delta;
 				score += delta; 
+				counterStars += delta;
 				if(counter > waitTimeGame){
 					Enemy enemy = new Enemy(HvlMath.randomFloatBetween(20, 1900),yPos - 50, HvlMath.randomFloatBetween(20, 100));
 					enemies.add(enemy);
 					counter = 0;
+				}
+				if(counterStars > waitTimeMenu+1){
+					Stars allStars = new Stars(HvlMath.randomFloatBetween(0, 1900),yPos -30, HvlMath.randomFloatBetween(1, 5));
+					stars.add(allStars);
 				}
 				waitTimeGame -= .005 * delta;
 				for(Enemy wave : enemies){
@@ -175,6 +191,9 @@ public class Main extends HvlTemplateInteg2D {
 						graceCount = 0;
 					}
 
+				}
+				for(Stars starWave : stars){
+					starWave.display(delta);
 				}
 				if(Keyboard.isKeyDown(Keyboard.KEY_D)){
 					player.xPos += player.keySpeed * delta;	
@@ -206,14 +225,22 @@ public class Main extends HvlTemplateInteg2D {
 			@Override
 			public void draw(float delta){
 				counter+=delta;
+				counterStars += delta;
 				intensifier += .005 * delta;
 				if(counter > waitTimeMenu){
 					Enemy enemyMenu = new Enemy(HvlMath.randomFloatBetween(20, 1900),yPos -30, HvlMath.randomFloatBetween(20, 100)*intensifier);
 					enemiesMenu.add(enemyMenu);
 					counter = 0;
 				}
+				if(counterStars > waitTimeMenu+1){
+					Stars allStars = new Stars(HvlMath.randomFloatBetween(0, 1900),yPos -30, HvlMath.randomFloatBetween(1, 5));
+					stars.add(allStars);
+				}
 				for(Enemy wave : enemiesMenu){
 					wave.displayMenu(delta);
+				}
+				for(Stars starWave : stars){
+					starWave.display(delta);
 				}
 				HvlPainter2D.hvlDrawQuad(0,0,width,height+ 400,shade);
 				gameFont.drawWordc("You have died", width/2, height/2 - 400, Color.darkGray, 2.05f);
@@ -225,6 +252,8 @@ public class Main extends HvlTemplateInteg2D {
 				
 				if(Keyboard.isKeyDown(Keyboard.KEY_M)){
 					HvlMenu.setCurrent(menu);
+					score = 0;
+					player.health = 100;
 				}
 				super.draw(delta);
 			}
