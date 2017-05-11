@@ -1,3 +1,4 @@
+package com.samuel;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;

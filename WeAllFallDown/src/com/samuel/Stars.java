@@ -1,3 +1,4 @@
+package com.samuel;
 import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;

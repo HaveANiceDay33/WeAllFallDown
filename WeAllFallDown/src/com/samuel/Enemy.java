@@ -1,3 +1,4 @@
+package com.samuel;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
