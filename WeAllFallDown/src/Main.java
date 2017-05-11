@@ -94,6 +94,8 @@ public class Main extends HvlTemplateInteg2D {
 		
 		healthBar = new Color(255,255,255,0.5f);
 		
+		getSoundLoader().loadResource("GameMenuMusic");
+		
 		getTextureLoader().loadResource("osFont");//0
 		getTextureLoader().loadResource("Font");//1
 		getTextureLoader().loadResource("runningman");//2
@@ -141,6 +143,10 @@ public class Main extends HvlTemplateInteg2D {
 				}
 				for(Stars starWave : stars){
 					starWave.display(delta);
+				}
+				if(!hasPlayed){
+					getSound(0).playAsSoundEffect(1, (float) 1, false);
+					hasPlayed = true;
 				}
 				HvlPainter2D.hvlDrawQuad(0,0,width,height+ 400,shade);
 				gameFont.drawWordc("We All Fall Down", width/2, height/2 - 400, Color.darkGray, 2.05f);
