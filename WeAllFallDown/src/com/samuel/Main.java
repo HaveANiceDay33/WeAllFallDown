@@ -71,7 +71,7 @@ public class Main extends HvlTemplateInteg2D {
 	public void initialize(){
 		hasPlayed = false;
 		
-		Player player = new Player(Display.getWidth()/2);
+		Player player = new Player(Display.getWidth()/2, Display.getHeight() - 75);
 		
 		waitTimeMenu = .2f;
 		waitTimeGame = 1f;
@@ -208,11 +208,23 @@ public class Main extends HvlTemplateInteg2D {
 				if(Keyboard.isKeyDown(Keyboard.KEY_A)){
 					player.xPos -= player.keySpeed * delta;	
 				}
+				if(Keyboard.isKeyDown(Keyboard.KEY_W)){
+					player.yPos -= player.keySpeed * delta;	
+				}
+				if(Keyboard.isKeyDown(Keyboard.KEY_S)){
+					player.yPos += player.keySpeed * delta;	
+				}
 				if(player.xPos <= 0){
 					player.xPos = 0;
 				}
 				if(player.xPos + 50 >= width){
 					player.xPos = width - 50;
+				}
+				if(player.yPos <= 0){
+					player.yPos = 0;
+				}
+				if(player.yPos + 50 >= height){
+					player.yPos = height - 50;
 				}
 				if(player.health <= 0){
 					player.health = 0;
@@ -262,6 +274,7 @@ public class Main extends HvlTemplateInteg2D {
 					score = 0;
 					player.health = 100;
 					enemies.clear();
+					intensifier = 1;				
 				}
 				super.draw(delta);
 			}

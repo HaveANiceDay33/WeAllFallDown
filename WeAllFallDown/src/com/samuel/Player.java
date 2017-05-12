@@ -14,13 +14,14 @@ public class Player{
 	public float health = 100;
 	
 	public float xPos;
-	public float yPos = Display.getHeight() - 75;
+	public float yPos;
 	
-	public Player(float xPos){
+	public Player(float xPos, float yPos){
 		this.xPos = xPos;
+		this.yPos = yPos;
 	}
 	public void display(float delta){
-		HvlPainter2D.hvlDrawQuad(xPos, Display.getHeight() - 75, sizeX, sizeY, Main.getTexture(4), colorPlay);
+		HvlPainter2D.hvlDrawQuad(xPos, yPos, sizeX, sizeY, Main.getTexture(4), colorPlay);
 	}
 
 }
