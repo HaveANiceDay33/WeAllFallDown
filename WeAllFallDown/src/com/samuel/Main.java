@@ -274,7 +274,9 @@ public class Main extends HvlTemplateInteg2D {
 					score = 0;
 					player.health = 100;
 					enemies.clear();
-					intensifier = 1;				
+					intensifier = 1;		
+					waitTimeGame = 1f;
+					player.yPos = height - 75;
 				}
 				super.draw(delta);
 			}
