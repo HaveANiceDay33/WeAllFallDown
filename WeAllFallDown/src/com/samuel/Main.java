@@ -59,6 +59,7 @@ public class Main extends HvlTemplateInteg2D {
 	float splashTime;
 	
 	float waitTime;
+	//array lists for stars and enemies
 	ArrayList<Enemy> enemies;
 	ArrayList<Enemy> enemiesMenu;
 	ArrayList<Stars> stars;
@@ -94,7 +95,7 @@ public class Main extends HvlTemplateInteg2D {
 		score = 0;
 		
 		healthBar = new Color(255,255,255,0.5f);
-		
+		//resource loaders
 		getSoundLoader().loadResource("GameMenuMusic");
 		
 		getTextureLoader().loadResource("osFont");//0
@@ -105,7 +106,7 @@ public class Main extends HvlTemplateInteg2D {
 		gameFont =  new HvlFontPainter2D(getTexture(0), HvlFontPainter2D.Preset.FP_INOFFICIAL,.5f,8f,0);
 		splashFont = new HvlFontPainter2D(getTexture(1), HvlFontUtil.DEFAULT,192, 256,0.25f,10);
 		
-		splash = new HvlMenu(){
+		splash = new HvlMenu(){  //splash screen
 			@Override
 			public void draw(float delta){
 
@@ -125,14 +126,14 @@ public class Main extends HvlTemplateInteg2D {
 				super.draw(delta);
 			}
 		};
-		menu = new HvlMenu(){
+		menu = new HvlMenu(){  //main menu
 			@Override
 			public void draw(float delta){
 				counter+=delta;
 				counterStars += delta;
 				if(counter > waitTimeMenu){
-					Enemy enemyMenu = new Enemy(HvlMath.randomFloatBetween(20, 1900),yPos -30, HvlMath.randomFloatBetween(20, 100));
-					enemiesMenu.add(enemyMenu);
+					Enemy enemyMenu = new Enemy(HvlMath.randomFloatBetween(20, 1900),yPos -30, HvlMath.randomFloatBetween(20, 100)); //enemy spawning
+					enemiesMenu.add(enemyMenu); //adding enemies to arraylist
 					counter = 0;
 				}
 				if(counterStars > waitTimeMenu + 1){
@@ -167,19 +168,20 @@ public class Main extends HvlTemplateInteg2D {
 				score += delta; 
 				counterStars += delta;
 				if(counter > waitTimeGame){
-					Enemy enemy = new Enemy(HvlMath.randomFloatBetween(20, 1900),yPos - 50, HvlMath.randomFloatBetween(20, 100));
-					enemies.add(enemy);
+					Enemy enemy = new Enemy(HvlMath.randomFloatBetween(20, 1900),yPos - 50, HvlMath.randomFloatBetween(20, 100));//spawner
+					enemies.add(enemy);//adding enemies to arraylist
 					counter = 0;
 				}
 				if(counterStars > waitTimeMenu+1){
-					Stars allStars = new Stars(HvlMath.randomFloatBetween(0, 1900),yPos -30, HvlMath.randomFloatBetween(1, 5));
-					stars.add(allStars);
+					Stars allStars = new Stars(HvlMath.randomFloatBetween(0, 1900),yPos -30, HvlMath.randomFloatBetween(1, 5));//star spawner
+					stars.add(allStars); //adding stars to arraylist
 				}
 				waitTimeGame -= .005 * delta;
 				for(Enemy wave : enemies){
 					wave.display(delta);
 					player.display(delta);
 					graceCount -= delta;
+					//hit detection algorithm
 					if(wave.x >= player.xPos && wave.x <= (player.xPos + 50) 
 							|| (wave.x + wave.speed) >= player.xPos && (wave.x+wave.speed) <= (player.xPos + 50) 
 							|| wave.x <= player.xPos && (wave.x + wave.speed) > (player.xPos + 50)){
@@ -187,8 +189,8 @@ public class Main extends HvlTemplateInteg2D {
 								|| wave.y >= player.yPos && wave.y <= (player.yPos + 50)
 								|| wave.y <= player.yPos && (wave.y + wave.speed) >= (player.yPos + 50)){
 							if(graceCount <= 0){
-								player.health -= 10;
-								graceCount = 30f;
+								player.health -= 10; //subtract from player health
+								graceCount = 30f; //grant invincibility
 							}
 	
 						}
@@ -200,8 +202,9 @@ public class Main extends HvlTemplateInteg2D {
 
 				}
 				for(Stars starWave : stars){
-					starWave.display(delta);
+					starWave.display(delta); //show ALL stars
 				}
+				//NEXT 8 IF STATEMENTS ARE MOVEMENT FUNCTIONS AND BOUNDARY LIMITS
 				if(Keyboard.isKeyDown(Keyboard.KEY_D)){
 					player.xPos += player.keySpeed * delta;	
 				}
@@ -228,8 +231,9 @@ public class Main extends HvlTemplateInteg2D {
 				}
 				if(player.health <= 0){
 					player.health = 0;
-					HvlMenu.setCurrent(death);
+					HvlMenu.setCurrent(death); //transfer to death screen
 				}
+				//healt bar and general UI
 				HvlPainter2D.hvlDrawQuad(100, 100, player.health * 3, 25, healthBar);
 				HvlPainter2D.hvlDrawQuad(98, 85, 2, 45, healthBar);
 				HvlPainter2D.hvlDrawQuad(400, 85, 2, 45, healthBar);
@@ -242,7 +246,7 @@ public class Main extends HvlTemplateInteg2D {
 		};
 		death = new HvlMenu(){
 			@Override
-			public void draw(float delta){
+			public void draw(float delta){ //death screen
 				counter+=delta;
 				counterStars += delta;
 				intensifier += .005 * delta;
@@ -269,7 +273,7 @@ public class Main extends HvlTemplateInteg2D {
 				gameFont.drawWordc("Press M to return to the menu", width/2, height/2 +400, Color.darkGray, 1.005f);
 				gameFont.drawWordc("Press M to return to the menu", width/2, height/2 + 400, Color.white, 1f);
 				
-				if(Keyboard.isKeyDown(Keyboard.KEY_M)){
+				if(Keyboard.isKeyDown(Keyboard.KEY_M)){  //Reset game and return to menu
 					HvlMenu.setCurrent(menu);
 					score = 0;
 					player.health = 100;
@@ -285,6 +289,6 @@ public class Main extends HvlTemplateInteg2D {
 	}
 	@Override
 	public void update(float delta){
-		HvlMenu.updateMenus(delta);
+		HvlMenu.updateMenus(delta); //update the menus
 	}
 }
