@@ -261,6 +261,7 @@ public class Main extends HvlTemplateInteg2D {
 					HvlMenu.setCurrent(menu);
 					score = 0;
 					player.health = 100;
+					enemies.clear();
 				}
 				super.draw(delta);
 			}
