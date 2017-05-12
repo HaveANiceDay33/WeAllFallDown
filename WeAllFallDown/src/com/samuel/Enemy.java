@@ -26,7 +26,9 @@ public class Enemy {
 	}
 	public void display(float delta){
 		float colorArg = HvlMath.map(speed, 20, 100, .05f , 1.0f);
+		//increase (move down) y position on screen
 		this.y += this.speed * delta;
+		//draw the enemy
 		HvlPainter2D.hvlDrawQuad(x, y, speed, speed, Main.getTexture(3), new Color(colorArg,colorArg,colorArg));// put it before color argument
 		
 	}
