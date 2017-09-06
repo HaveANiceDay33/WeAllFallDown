@@ -46,6 +46,8 @@ public class Main extends HvlTemplateInteg2D {
 	
 	float waitTimeMenu;
 	float waitTimeGame;
+	float shotCount;
+	float shotWait;
 	float yPos;
 	
 	HvlMenu splash;
@@ -63,6 +65,7 @@ public class Main extends HvlTemplateInteg2D {
 	ArrayList<Enemy> enemies;
 	ArrayList<Enemy> enemiesMenu;
 	ArrayList<Stars> stars;
+	ArrayList<Shot> shots;
 	float counter;
 	float counterStars;
 	
@@ -76,12 +79,15 @@ public class Main extends HvlTemplateInteg2D {
 		
 		waitTimeMenu = .2f;
 		waitTimeGame = 1f;
+		shotCount = 0;
+		shotWait = 0.5f;
 		graceCount = 30f;
 		counter = 0;
 		counterStars = 0;
 		enemies = new ArrayList<Enemy>();
 		enemiesMenu = new ArrayList<Enemy>();
 		stars = new ArrayList<Stars>();
+		shots = new ArrayList<Shot>();
 		yPos = -50;
 		width = Display.getWidth();
 		height = Display.getHeight();
@@ -167,6 +173,7 @@ public class Main extends HvlTemplateInteg2D {
 				counter+=delta;
 				score += delta; 
 				counterStars += delta;
+				shotCount += delta;
 				if(counter > waitTimeGame){
 					Enemy enemy = new Enemy(HvlMath.randomFloatBetween(20, 1900),yPos - 50, HvlMath.randomFloatBetween(20, 100));//spawner
 					enemies.add(enemy);//adding enemies to arraylist
@@ -180,6 +187,15 @@ public class Main extends HvlTemplateInteg2D {
 				for(Enemy wave : enemies){
 					wave.display(delta);
 					player.display(delta);
+					
+					for(Shot shotWave : shots) {
+						shotWave.display(delta);
+						if(shotWave.y <= wave.y+wave.speed && shotWave.y >= wave.y && shotWave.x <= wave.x+wave.speed &&
+								shotWave.x >= wave.x){
+							wave.speed -= 2;
+						}
+					}
+					
 					graceCount -= delta;
 					//hit detection algorithm
 					if(wave.x >= player.xPos && wave.x <= (player.xPos + 50) 
@@ -204,6 +220,14 @@ public class Main extends HvlTemplateInteg2D {
 				for(Stars starWave : stars){
 					starWave.display(delta); //show ALL stars
 				}
+				if(Keyboard.isKeyDown(Keyboard.KEY_F) && shotCount > shotWait) {
+					Shot newShot = new Shot(player.xPos + 23, player.yPos - 15,40);
+					shots.add(newShot);
+					shotCount = 0;
+				}
+				
+			
+				
 				//NEXT 8 IF STATEMENTS ARE MOVEMENT FUNCTIONS AND BOUNDARY LIMITS
 				if(Keyboard.isKeyDown(Keyboard.KEY_D)){
 					player.xPos += player.keySpeed * delta;	
