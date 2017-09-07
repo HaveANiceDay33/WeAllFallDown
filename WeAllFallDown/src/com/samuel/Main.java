@@ -160,6 +160,9 @@ public class Main extends HvlTemplateInteg2D {
 				score += delta; 
 				counterStars += delta;
 				shotCount += delta;
+				if(shotCount > 1f) {
+					shotCount = 1f;
+				}
 				if(counter > waitTimeGame){
 					Enemy enemy = new Enemy(HvlMath.randomFloatBetween(20, 1900),yPos - 50, HvlMath.randomFloatBetween(20, 100));//spawner
 					enemies.add(enemy);//adding enemies to arraylist
@@ -213,7 +216,7 @@ public class Main extends HvlTemplateInteg2D {
 				for(Stars starWave : stars){
 					starWave.display(delta); //show ALL stars
 				}
-				if(Keyboard.isKeyDown(Keyboard.KEY_F) && shotCount > shotWait) {
+				if(Keyboard.isKeyDown(Keyboard.KEY_F) && shotCount >= shotWait) {
 					Shot newShot = new Shot(player.xPos + 23, player.yPos - 15,300);
 					shots.add(newShot);
 					shotCount = 0;
@@ -256,6 +259,12 @@ public class Main extends HvlTemplateInteg2D {
 				HvlPainter2D.hvlDrawQuad(400, 85, 2, 45, healthBar);
 				gameFont.drawWordc("0", 100, 150, healthBar, 0.3f);
 				gameFont.drawWordc("100", 400, 150, healthBar, 0.3f);
+				HvlPainter2D.hvlDrawQuad(100, 400, shotCount * 300, 25, healthBar);
+				if(shotCount < 1f) {
+					gameFont.drawWordc("Reloading.....", 250, 470, healthBar, 0.3f);
+				}
+				HvlPainter2D.hvlDrawQuad(98, 385, 2, 45, healthBar);
+				HvlPainter2D.hvlDrawQuad(400, 385, 2, 45, healthBar);
 				gameFont.drawWordc("Invincibility Time: "+ Math.round(graceCount), 250 , 180, healthBar, .3f);
 				gameFont.drawWordc("Score: "+Math.round(score), 250, 300, healthBar, 0.5f);
 				super.draw(delta);
