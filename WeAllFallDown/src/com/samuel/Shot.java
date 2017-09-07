@@ -17,6 +17,6 @@ public class Shot {
 	}
 	public void display(float delta) {
 		this.y -= this.speed * delta;
-		HvlPainter2D.hvlDrawQuad(x, this.y, 5,25, new Color(100 + (int)(Math.random() * ((255 - 100) + 1)) ,100 + (int)(Math.random() * ((255 - 100) + 1)),100 + (int)(Math.random() * ((255 - 100) + 1))));
+		HvlPainter2D.hvlDrawQuad(x, this.y, 5,25, Color.pink);
 	}
 }

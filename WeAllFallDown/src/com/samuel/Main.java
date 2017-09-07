@@ -3,26 +3,12 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-
-
 import org.newdawn.slick.Color;
-import org.newdawn.slick.opengl.Texture;
 
 import com.osreboot.ridhvl.HvlFontUtil;
 import com.osreboot.ridhvl.HvlMath;
-import com.osreboot.ridhvl.action.HvlAction1;
-import com.osreboot.ridhvl.action.HvlAction2;
-import com.osreboot.ridhvl.display.HvlDisplayMode;
 import com.osreboot.ridhvl.display.collection.HvlDisplayModeDefault;
-import com.osreboot.ridhvl.menu.HvlComponent;
-import com.osreboot.ridhvl.menu.HvlComponentDefault;
 import com.osreboot.ridhvl.menu.HvlMenu;
-import com.osreboot.ridhvl.menu.component.HvlButton;
-import com.osreboot.ridhvl.menu.component.HvlComponentDrawable;
-import com.osreboot.ridhvl.menu.component.collection.HvlLabeledButton;
-import com.osreboot.ridhvl.painter.HvlCursor;
-import com.osreboot.ridhvl.painter.HvlGradient;
-import com.osreboot.ridhvl.painter.HvlGradient.Style;
 import com.osreboot.ridhvl.painter.painter2d.HvlFontPainter2D;
 import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
@@ -80,14 +66,14 @@ public class Main extends HvlTemplateInteg2D {
 		waitTimeMenu = .2f;
 		waitTimeGame = 1f;
 		shotCount = 0;
-		shotWait = 0.5f;
+		shotWait = 1f;
 		graceCount = 30f;
 		counter = 0;
 		counterStars = 0;
-		enemies = new ArrayList<Enemy>();
-		enemiesMenu = new ArrayList<Enemy>();
-		stars = new ArrayList<Stars>();
-		shots = new ArrayList<Shot>();
+		enemies = new ArrayList<>();
+		enemiesMenu = new ArrayList<>();
+		stars = new ArrayList<>();
+		shots = new ArrayList<>();
 		yPos = -50;
 		width = Display.getWidth();
 		height = Display.getHeight();
@@ -184,19 +170,23 @@ public class Main extends HvlTemplateInteg2D {
 					stars.add(allStars); //adding stars to arraylist
 				}
 				waitTimeGame -= .005 * delta;
+				graceCount -= 10*delta;
 				for(Enemy wave : enemies){
 					wave.display(delta);
 					player.display(delta);
 					
 					for(Shot shotWave : shots) {
-						shotWave.display(delta);
+						
 						if(shotWave.y <= wave.y+wave.speed && shotWave.y >= wave.y && shotWave.x <= wave.x+wave.speed &&
 								shotWave.x >= wave.x){
-							wave.speed -= 2;
+							wave.speed -= 0.5;
+							if(wave.speed < 0){
+								wave.speed = 0;
+							}
 						}
 					}
 					
-					graceCount -= delta;
+				
 					//hit detection algorithm
 					if(wave.x >= player.xPos && wave.x <= (player.xPos + 50) 
 							|| (wave.x + wave.speed) >= player.xPos && (wave.x+wave.speed) <= (player.xPos + 50) 
@@ -217,11 +207,14 @@ public class Main extends HvlTemplateInteg2D {
 					}
 
 				}
+				for(Shot shotShow : shots){
+					shotShow.display(delta);
+				}
 				for(Stars starWave : stars){
 					starWave.display(delta); //show ALL stars
 				}
 				if(Keyboard.isKeyDown(Keyboard.KEY_F) && shotCount > shotWait) {
-					Shot newShot = new Shot(player.xPos + 23, player.yPos - 15,40);
+					Shot newShot = new Shot(player.xPos + 23, player.yPos - 15,300);
 					shots.add(newShot);
 					shotCount = 0;
 				}
@@ -257,7 +250,7 @@ public class Main extends HvlTemplateInteg2D {
 					player.health = 0;
 					HvlMenu.setCurrent(death); //transfer to death screen
 				}
-				//healt bar and general UI
+				//health bar and general UI
 				HvlPainter2D.hvlDrawQuad(100, 100, player.health * 3, 25, healthBar);
 				HvlPainter2D.hvlDrawQuad(98, 85, 2, 45, healthBar);
 				HvlPainter2D.hvlDrawQuad(400, 85, 2, 45, healthBar);
