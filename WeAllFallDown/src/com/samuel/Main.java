@@ -112,9 +112,7 @@ public class Main extends HvlTemplateInteg2D {
 				if(splashTime < 0){
 					HvlMenu.setCurrent(menu);
 				}
-				if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
-					exit();
-				}
+				
 				super.draw(delta);
 			}
 		};
@@ -315,6 +313,9 @@ public class Main extends HvlTemplateInteg2D {
 	}
 	@Override
 	public void update(float delta){
+		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
+					exit();
+				}
 		HvlMenu.updateMenus(delta); //update the menus
 	}
 }
