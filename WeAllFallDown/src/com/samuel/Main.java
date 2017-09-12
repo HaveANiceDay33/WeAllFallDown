@@ -177,7 +177,7 @@ public class Main extends HvlTemplateInteg2D {
 					player.display(delta);
 					
 					for(Shot shotWave : shots) {
-						
+						//shot detection
 						if(shotWave.y <= wave.y+wave.speed && shotWave.y >= wave.y && shotWave.x <= wave.x+wave.speed &&
 								shotWave.x >= wave.x){
 							wave.speed -= 0.5;
