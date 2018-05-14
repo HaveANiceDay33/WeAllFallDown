@@ -157,7 +157,7 @@ public class Main extends HvlTemplateInteg2D {
 				counter+=delta;
 				score += delta; 
 				counterStars += delta;
-				shotCount += delta;
+				shotCount += delta*2;
 				if(shotCount > 1f) {
 					shotCount = 1f;
 				}
